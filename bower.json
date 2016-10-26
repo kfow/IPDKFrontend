@@ -1,0 +1,22 @@
+{
+  "name": "frontend",
+  "description": "Frontend web app for Public vs Private: Identifying Public Domain Knowledge",
+  "main": "app.js",
+  "authors": [
+    "Kelvin Fowler <kelvinfowler168@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7"
+  }
+}

@@ -1,0 +1,25 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+  cursor: pointer;
+}
+
+.panel-body{
+    min-height: 75vh;
+    max-height: 75vh;
+    overflow-y: scroll;
+    position: relative;
+}
+
+.panel-heading{
+    min-height: 20vh;
+    max-height: 20vh;
+}
+
+.panel-title{
+    font-weight: bold;
+}
