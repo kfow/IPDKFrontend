@@ -4,13 +4,17 @@
 
 
 DocumentService = function(){
+    console.log("Loaded document service");
     var self = this;
 
-    self.GetNamedEntities = function(){
+    self.TestApiConsume = function(){
+        var data = {documentContent: "This is a test document"};
         return $.ajax({
-            type: "GET",
-            url: "localhost:8080/ipdk/api/namedentities",
-            contentType: "application/json"
+            type: "POST",
+            url: "localhost:8080/ipdk/api/testconsume",
+            contentType: "application/json",
+            dataType: "jsonp",
+            data: data
         });
     }
 };
