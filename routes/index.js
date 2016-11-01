@@ -18,4 +18,8 @@ router.get('/admin', function(req, res, next) {
     res.render('admin');
 });
 
+router.get('/vue', function(req, res, next) {
+    res.render('VueTest');
+});
+
 module.exports = router;
