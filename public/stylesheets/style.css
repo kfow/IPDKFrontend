@@ -1,6 +1,9 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 10px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
 }
 
 a {
@@ -8,18 +11,45 @@ a {
   cursor: pointer;
 }
 
-.panel-body{
-    min-height: 75vh;
-    max-height: 75vh;
+.doc-view{
+    min-height: 70vh;
+    max-height: 70vh;
     overflow-y: scroll;
     position: relative;
 }
 
-.panel-heading{
-    min-height: 20vh;
-    max-height: 20vh;
+.bold{
+    font-weight: bold;
 }
 
-.panel-title{
-    font-weight: bold;
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.index-container{
+    height: 100%;
+    overflow: hidden;
+}
+
+.panel{
+    max-height: 100%;
+    height: 100%;
+}
+
+.close-tab{
+    position: absolute;
+    curson: pointer;
+    color: black;
+    cursor: pointer;
+    display: inline-block;
+    top: 8px;
+    right: 6px;
+}
+
+.close-tab:hover{
+    color: red;
 }

@@ -4,49 +4,86 @@
     <% include partials/head.ejs %>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title">Document for Reviewal</h1>
-                    <h3 class="panel-title"></h3>
-                    <p>12-12-2006</p>
-                    <p>From: John Smith</p>
-                    <p>To: Angela Baxter</p>
-                    <p>Subject: Lorem Ipsum Dolor Sit</p>
-                </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam purus, interdum eget enim sed, pharetra imperdiet quam. Phasellus mattis laoreet nisi, a mattis mi bibendum non. Fusce id velit sed tellus vulputate cursus sit amet vel tortor. Aliquam maximus finibus eros. Fusce cursus, felis ac faucibus tincidunt, sapien felis tincidunt odio, non porttitor ex libero in nisi. Fusce consequat arcu eu arcu aliquam, vel faucibus dui viverra. Pellentesque nisl metus, mollis vestibulum rutrum a, condimentum vel lectus. Morbi nunc eros, tristique id accumsan sodales, eleifend lacinia tortor.</p>
-                    <p>Nam fringilla eu risus vitae maximus. Nunc malesuada faucibus ligula, at semper enim. Vivamus suscipit molestie ullamcorper. Donec molestie lacus ante, a ultricies justo accumsan et. Aliquam varius et ligula non faucibus. Proin vitae dolor convallis, iaculis nisi eget, bibendum urna. Phasellus mattis orci fermentum leo lacinia, quis tincidunt augue cursus. Phasellus nisi augue, malesuada et viverra vel, luctus quis mauris. Proin luctus hendrerit ex ut viverra. Nunc et convallis mi. Nam ornare fermentum pretium.</p>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi euismod arcu lectus, sed accumsan magna blandit sed. Ut suscipit ultricies blandit. Morbi nec lobortis risus. Morbi magna lorem, mattis a sagittis sit amet, porta eget ipsum. Quisque semper iaculis dignissim. Curabitur sollicitudin tempor sem, a euismod dui imperdiet non. Morbi id tortor vitae diam lobortis aliquet vel eu odio. Curabitur ante metus, mollis vel feugiat vitae, posuere elementum lectus. Fusce sollicitudin tellus eu eleifend efficitur.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <a class="btn btn-primary" style="float: right;" href="/search">Return to Results</a>
-                    <h3 class="panel-title">Lorem Ipsum Announces Retirement</h3>
-                    <p>12-12-2006</p>
-                    <p>Source: BBC News</p>
-                </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur diam purus, interdum eget enim sed, pharetra imperdiet quam. Phasellus mattis laoreet nisi, a mattis mi bibendum non. Fusce id velit sed tellus vulputate cursus sit amet vel tortor. Aliquam maximus finibus eros. Fusce cursus, felis ac faucibus tincidunt, sapien felis tincidunt odio, non porttitor ex libero in nisi. Fusce consequat arcu eu arcu aliquam, vel faucibus dui viverra. Pellentesque nisl metus, mollis vestibulum rutrum a, condimentum vel lectus. Morbi nunc eros, tristique id accumsan sodales, eleifend lacinia tortor.</p>
-                    <p>Nam fringilla eu risus vitae maximus. Nunc malesuada faucibus ligula, at semper enim. Vivamus suscipit molestie ullamcorper. Donec molestie lacus ante, a ultricies justo accumsan et. Aliquam varius et ligula non faucibus. Proin vitae dolor convallis, iaculis nisi eget, bibendum urna. Phasellus mattis orci fermentum leo lacinia, quis tincidunt augue cursus. Phasellus nisi augue, malesuada et viverra vel, luctus quis mauris. Proin luctus hendrerit ex ut viverra. Nunc et convallis mi. Nam ornare fermentum pretium.</p>
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi euismod arcu lectus, sed accumsan magna blandit sed. Ut suscipit ultricies blandit. Morbi nec lobortis risus. Morbi magna lorem, mattis a sagittis sit amet, porta eget ipsum. Quisque semper iaculis dignissim. Curabitur sollicitudin tempor sem, a euismod dui imperdiet non. Morbi id tortor vitae diam lobortis aliquet vel eu odio. Curabitur ante metus, mollis vel feugiat vitae, posuere elementum lectus. Fusce sollicitudin tellus eu eleifend efficitur.</p>
-                </div>
-                <div class="panel-footer">
-                    <a class="btn btn-primary" style="float: left;"> Previous </a>
-                    <a class="btn btn-primary" style="float: right;"> Next </a>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
+<div id="index-continer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="panel panel-default" id="source-doc-panel">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Document for Reviewal</h1>
+                        <div class="clearfix"></div>
+                    </div> <!-- /.panel-heading doc-view-heading-->
+                    <div class="panel-body doc-view">
+                        <h4 class="bold" > Document Subject: </h4>
+                        <p data-bind="text: sourceSubject"></p>
+                        <h4 class="bold" > Document Tags: </h4>
+                        <p data-bind="text: sourceTags"></p>
+                        <h4 class="bold"> Document Body: </h4>
+                        <p data-bind="text: sourceBody"></p>
+                    </div>
+                    <div class="panel-footer">
+                        <a class="btn btn-primary float-left"> Previous </a>
+                        <a class="btn btn-primary float-right"> Next </a>
+                        <div class="clearfix"></div>
+                    </div> <!-- /.panel-footer -->
+                </div> <!-- /.panel panel-default -->
+            </div> <!-- /.col-xs-6 -->
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
 
-        </div>
+                            <li role="presentation" class="active">
+                                <a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search</a>
+                            </li>
+                            <li role="presentation" >
+                                <a href="#compare" aria-controls="compare" role="tab" data-toggle="tab">Auto Compare</a>
+                                <span class="close-tab">x</span>
+                            </li>
+                            <li role="presentation" ><a href="#compare" aria-controls="compare" role="tab" data-toggle="tab">Custom Compare</a>
+                                <span class="close-tab">x</span>
+                            </li>
+                            <li role="presentation" ><a href="#results" aria-controls="results" role="tab" data-toggle="tab">Auto Results</a>
+                                <span class="close-tab">x</span>
+                            </li>
+                            <li role="presentation" ><a href="#results" aria-controls="results" role="tab" data-toggle="tab">Custom Results</a>
+                                <span class="close-tab">x</span>
+                            </li>
 
-    </div>
-</div>
+                        </ul>
+                    </div> <!-- /.panel-heading doc-view-heading -->
+                    <div class="panel-body doc-view">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+
+                            <div role="tabpanel" class="tab-pane active" id="search">
+                                <% include partials/search.ejs %>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="compare">
+                                <% include partials/comparisonDoc.ejs %>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="results">
+                                <% include partials/results.ejs %>
+                            </div>
+
+                        </div> <!-- /.tab-content -->
+                    </div> <!-- /.panel-body -->
+                </div> <!--/.panel panel-default -->
+            </div> <!-- /.col-xs-6 -->
+        </div> <!-- /.row -->
+    </div> <!-- /.container-fluid -->
+</div> <!-- /.index-container -->
+<script src="/javascripts/IndexViewModel.js"></script>
+<script src="/javascripts/DocumentService.js"></script>
+<script>
+    // Initialize Knockout ViewModel
+    var documentService = new DocumentService();
+    var indexViewModel = new IndexViewModel({
+        DocumentService: documentService
+    });
+    ko.applyBindings(indexViewModel, $("#index-container")[0])
+</script>
 </body>
 </html>
 

@@ -22,4 +22,8 @@ router.get('/vue', function(req, res, next) {
     res.render('VueTest');
 });
 
+router.get('/tabs', function(req, res, next){
+    res.render('index-tabs')
+})
+
 module.exports = router;
