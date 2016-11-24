@@ -11,15 +11,32 @@
                 <div class="panel panel-default" id="source-doc-panel">
                     <div class="panel-heading">
                         <h1 class="panel-title">Document for Reviewal</h1>
+                        <a data-bind="click: toggleShowAdmin" class="btn btn-default float-right">Change Document Set</a>
                         <div class="clearfix"></div>
                     </div> <!-- /.panel-heading doc-view-heading-->
+
                     <div class="panel-body doc-view">
-                        <h4 class="bold" > Document Subject: </h4>
-                        <p data-bind="text: sourceSubject"></p>
-                        <h4 class="bold" > Document Tags: </h4>
-                        <p data-bind="text: sourceTags"></p>
-                        <h4 class="bold"> Document Body: </h4>
-                        <p data-bind="text: sourceBody"></p>
+                        <div data-bind="visible: showAdmin">
+                            <% include partials/admin.ejs%>
+                        </div>
+                        <div data-bind="visible: !showAdmin()">
+                            <h4 class="bold" > Created: </h4>
+                            <p data-bind="text: sourceDoc.created"></p>
+                            <h4 class="bold" > Released: </h4>
+                            <p data-bind="text: sourceDoc.released"></p>
+                            <h4 class="bold" > Classification: </h4>
+                            <p data-bind="text: sourceDoc.classification"></p>
+                            <h4 class="bold" > Origin: </h4>
+                            <p data-bind="text: sourceDoc.origin"></p>
+                            <h4 class="bold" > From: </h4>
+                            <p data-bind="text: sourceDoc.from"></p>
+                            <h4 class="bold" > To: </h4>
+                            <p data-bind="text: sourceDoc.to"></p>
+                            <h4 class="bold" > Subject: </h4>
+                            <p data-bind="text: sourceDoc.subject"></p>
+                            <h4 class="bold"> Body: </h4>
+                            <p data-bind="text: sourceDoc.body"></p>
+                        </div>
                     </div>
                     <div class="panel-footer">
                         <a class="btn btn-primary float-left"> Previous </a>

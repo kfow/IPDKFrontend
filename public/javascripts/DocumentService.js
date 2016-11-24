@@ -5,7 +5,7 @@
 
 
 DocumentService = function(){
-    console.log("Loaded document service");
+
     var self = this;
 
     self.GetSourceDoc = function(currentDoc){
@@ -19,6 +19,14 @@ DocumentService = function(){
             type: "GET",
             url: url,
             dataType: "json",
+        });
+    }
+
+    self.IndexSourceFiles = function(path){
+        return $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ipdk/api/indexsourcefiles?path=" + path,
+            dataType: "json"
         });
     }
 };
