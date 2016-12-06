@@ -11,43 +11,91 @@ IndexViewModel = function(settings){
         from : ko.observable("Loading..."),
         to : ko.observable("Loading..."),
         subject : ko.observable("Loading..."),
-        subject : ko.observable("Loading..."),
         body : ko.observable("Loading...")
-    }
-    self.showAdmin = ko.observable(false);
+    };
 
-    self.currentSourceDocument = ko.observable();
+    self.indexedNew = ko.observable(false);
 
-    self.indexPath = ko.observable();
-
+    // Available Indexes (Initial Setup Also)
+    self.availableIndexes = ko.observableArray([]);
     ko.computed(function() {
-        settings.DocumentService.GetSourceDoc(self.currentSourceDocument())
-            .done( function(data) {
-                self.sourceDoc.created(data.created);
-                self.sourceDoc.released(data.released);
-                self.sourceDoc.classification(data.classification);
-                self.sourceDoc.origin(data.origin);
-                self.sourceDoc.from(data.from);
-                self.sourceDoc.to(data.to);
-                self.sourceDoc.subject(data.subject);
-                self.sourceDoc.subject(data.subject);
-                self.sourceDoc.body(data.body);
+        //Retrieving available indexes
+        console.log("Retrieving available indexes");
+        if (self.indexedNew()) self.indexedNew(false);
+        settings.DocumentService.GetIndexes()
+            .done ( function(data) {
+                self.availableIndexes(data.indexPaths);
             });
     });
 
-    self.toggleShowAdmin = function() {
-        if (self.showAdmin() === false) {
-            self.showAdmin(true);
-        } else {
-            self.showAdmin(false);
+    self.showAdmin = ko.observable(false);
+
+    self.currentSourceDocument = ko.observable(0);
+
+    // TODO: what is this for?
+    self.indexPath = ko.observable();
+
+    self.workingCorpora = ko.observable();
+    self.workingCorporaSize = ko.observable(0);
+
+    // Navigation Observables and Logic
+    self.showCorporaChoice = ko.observable(true);
+    self.showIndexingMenu = ko.observable(false);
+    self.showMainApp = ko.observable(false);
+
+    ko.computed(function() {
+        if (self.workingCorpora()) {
+            console.log("Retrieving Source Document");
+            settings.DocumentService.GetSourceDoc(self.currentSourceDocument(), self.workingCorpora())
+                .done(function (data) {
+                    self.sourceDoc.created(data.created);
+                    self.sourceDoc.released(data.released);
+                    self.sourceDoc.classification(data.classification);
+                    self.sourceDoc.origin(data.origin);
+                    self.sourceDoc.from(data.from);
+                    self.sourceDoc.to(data.to);
+                    self.sourceDoc.subject(data.subject);
+                    self.sourceDoc.body(data.body);
+                    self.workingCorporaSize(data.amountInCorpora);
+                });
         }
-    }
+    });
 
     self.beginIndexing = function() {
         settings.DocumentService.IndexSourceFiles(self.indexPath())
             .done( function(data) {
+                self.indexedNew(true);
+            }); // TODO
+    };
 
-            });
-    }
+    self.appearIndexingMenu = function() {
+        self.showIndexingMenu(true);
+        self.showCorporaChoice(false);
+        self.showMainApp(false);
+    };
+
+    self.appearCorporaChoice = function() {
+        self.showIndexingMenu(false);
+        self.showCorporaChoice(true);
+        self.showMainApp(false);
+    };
+
+    self.appearMainApp = function() {
+        self.showIndexingMenu(false);
+        self.showCorporaChoice(false);
+        self.showMainApp(true);
+    };
+
+    self.nextSourceDocument = function(){
+        if (self.currentSourceDocument() < self.workingCorporaSize()){
+            self.currentSourceDocument(self.currentSourceDocument() + 1);
+        }
+    };
+
+    self.previousSourceDocument = function(){
+        if (self.currentSourceDocument() > 0) {
+            self.currentSourceDocument(self.currentSourceDocument() - 1);
+        }
+    };
 
 };

@@ -1,0 +1,76 @@
+<div class="col-xs-6">
+    <div class="panel panel-default" id="source-doc-panel">
+        <div class="panel-heading">
+            <h1 class="panel-title">Document for Reviewal</h1>
+            <a data-bind="click: appearCorporaChoice" class="btn btn-default float-right">Change Working Corpora</a>
+            <div class="clearfix"></div>
+        </div> <!-- /.panel-heading doc-view-heading-->
+
+        <div class="panel-body doc-view">
+            <div data-bind="visible: !showAdmin()">
+                <h4 class="bold" > Created: </h4>
+                <p data-bind="text: sourceDoc.created"></p>
+                <h4 class="bold" > Released: </h4>
+                <p data-bind="text: sourceDoc.released"></p>
+                <h4 class="bold" > Classification: </h4>
+                <p data-bind="text: sourceDoc.classification"></p>
+                <h4 class="bold" > Origin: </h4>
+                <p data-bind="text: sourceDoc.origin"></p>
+                <h4 class="bold" > From: </h4>
+                <p data-bind="text: sourceDoc.from"></p>
+                <h4 class="bold" > To: </h4>
+                <p data-bind="text: sourceDoc.to"></p>
+                <h4 class="bold" > Subject: </h4>
+                <p data-bind="text: sourceDoc.subject"></p>
+                <h4 class="bold"> Body: </h4>
+                <p data-bind="text: sourceDoc.body"></p>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <a class="btn btn-primary float-left" data-bind="click: previousSourceDocument"> Previous </a>
+            <a class="btn btn-primary float-right" data-bind="click: nextSourceDocument"> Next </a>
+            <div class="clearfix"></div>
+        </div> <!-- /.panel-footer -->
+    </div> <!-- /.panel panel-default -->
+</div> <!-- /.col-xs-6 -->
+<div class="col-xs-6">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+
+                <li role="presentation" class="active">
+                    <a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search</a>
+                </li>
+                <li role="presentation" >
+                    <a href="#compare" aria-controls="compare" role="tab" data-toggle="tab">Auto Compare</a>
+                    <span class="close-tab">x</span>
+                </li>
+                <li role="presentation" ><a href="#compare" aria-controls="compare" role="tab" data-toggle="tab">Custom Compare</a>
+                    <span class="close-tab">x</span>
+                </li>
+                <li role="presentation" ><a href="#results" aria-controls="results" role="tab" data-toggle="tab">Auto Results</a>
+                    <span class="close-tab">x</span>
+                </li>
+                <li role="presentation" ><a href="#results" aria-controls="results" role="tab" data-toggle="tab">Custom Results</a>
+                    <span class="close-tab">x</span>
+                </li>
+
+            </ul>
+        </div> <!-- /.panel-heading doc-view-heading -->
+        <div class="panel-body doc-view">
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="search">
+                    <% include search.ejs %>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="compare">
+                    <% include comparisonDoc.ejs %>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="results">
+                    <% include results.ejs %>
+                </div>
+            </div> <!-- /.tab-content -->
+        </div> <!-- /.panel-body -->
+    </div> <!--/.panel panel-default -->
+</div> <!-- /.col-xs-6 -->
