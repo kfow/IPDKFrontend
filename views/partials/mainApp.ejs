@@ -8,27 +8,21 @@
 
         <div class="panel-body doc-view">
             <div data-bind="visible: !showAdmin()">
-                <h4 class="bold" > Created: </h4>
-                <p data-bind="text: sourceDoc.created"></p>
-                <h4 class="bold" > Released: </h4>
-                <p data-bind="text: sourceDoc.released"></p>
-                <h4 class="bold" > Classification: </h4>
-                <p data-bind="text: sourceDoc.classification"></p>
-                <h4 class="bold" > Origin: </h4>
-                <p data-bind="text: sourceDoc.origin"></p>
-                <h4 class="bold" > From: </h4>
-                <p data-bind="text: sourceDoc.from"></p>
-                <h4 class="bold" > To: </h4>
-                <p data-bind="text: sourceDoc.to"></p>
-                <h4 class="bold" > Subject: </h4>
-                <p data-bind="text: sourceDoc.subject"></p>
-                <h4 class="bold"> Body: </h4>
+                <h6 class="bold" > Created: <span style="font-size: small" data-bind="text: sourceDoc.created"></span></h6>
+                <h6 class="bold" > Released: <span style="font-size: small" data-bind="text: sourceDoc.released"></span></h6>
+                <h6 class="bold" > Classification: <span style="font-size: small" data-bind="text: sourceDoc.classification"></span></h6>
+                <h6 class="bold" > Origin: <span style="font-size: small" data-bind="text: sourceDoc.origin"></span></h6>
+                <h6 class="bold" > From: <span style="font-size: small" data-bind="text: sourceDoc.from"></span></h6>
+                <h6 class="bold" > To: <span style="font-size: small" data-bind="text: sourceDoc.to"></span></h6>
+                <h6 class="bold" > Subject: <span style="font-size: small" data-bind="text: sourceDoc.subject"></span></h6>
+                <h6 class="bold"> Body: </h6>
                 <p data-bind="text: sourceDoc.body"></p>
             </div>
         </div>
         <div class="panel-footer">
             <a class="btn btn-primary float-left" data-bind="click: previousSourceDocument"> Previous </a>
             <a class="btn btn-primary float-right" data-bind="click: nextSourceDocument"> Next </a>
+            <p style="display: flex; justify-content: center; align-items: center" data-bind="text: documentProgressCounter"></p>
             <div class="clearfix"></div>
         </div> <!-- /.panel-footer -->
     </div> <!-- /.panel panel-default -->
@@ -60,17 +54,21 @@
         </div> <!-- /.panel-heading doc-view-heading -->
         <div class="panel-body doc-view">
             <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="search">
-                    <% include search.ejs %>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="compare">
-                    <% include comparisonDoc.ejs %>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="results">
-                    <% include results.ejs %>
-                </div>
-            </div> <!-- /.tab-content -->
+            <a class="btn btn-default" data-bind="click: neQuery">Run Named Entities Query</a>
+            <a class="btn btn-default" data-bind="click: allTermsQuery">Run All Terms Query</a>
+            <p data-bind="text: queryResults"></p>
+
+            <!--<div class="tab-content">-->
+                <!--<div role="tabpanel" class="tab-pane active" id="search">-->
+                    <!--<% include search.ejs %>-->
+                <!--</div>-->
+                <!--<div role="tabpanel" class="tab-pane" id="compare">
+                    <!--<% include comparisonDoc.ejs %>-->
+                <!--</div>-->
+                <!--<div role="tabpanel" class="tab-pane" id="results">-->
+                    <!--<% include results.ejs %>-->
+                <!--</div>-->
+            <!--</div> &lt;!&ndash; /.tab-content &ndash;&gt;-->
         </div> <!-- /.panel-body -->
     </div> <!--/.panel panel-default -->
 </div> <!-- /.col-xs-6 -->

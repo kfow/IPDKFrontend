@@ -36,5 +36,11 @@ DocumentService = function(){
             url: "http://localhost:8080/ipdk/api/indexedcorpora",
             dataType: "json"
         });
+    };
+
+    self.GetQueryResults = function(query){
+        return $.ajax({
+
+        });
     }
 };

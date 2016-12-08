@@ -11,7 +11,9 @@ IndexViewModel = function(settings){
         from : ko.observable("Loading..."),
         to : ko.observable("Loading..."),
         subject : ko.observable("Loading..."),
-        body : ko.observable("Loading...")
+        body : ko.observable("Loading..."),
+        NEQuery : ko.observable("Loading..."),
+        allTermsQuery: ko.observable("Loading...")
     };
 
     self.indexedNew = ko.observable(false);
@@ -43,6 +45,10 @@ IndexViewModel = function(settings){
     self.showIndexingMenu = ko.observable(false);
     self.showMainApp = ko.observable(false);
 
+    self.documentProgressCounter = ko.computed(function(){
+        return parseInt(self.currentSourceDocument())+1 + "/" + (parseInt(self.workingCorporaSize()) +1);
+    });
+
     ko.computed(function() {
         if (self.workingCorpora()) {
             console.log("Retrieving Source Document");
@@ -56,7 +62,10 @@ IndexViewModel = function(settings){
                     self.sourceDoc.to(data.to);
                     self.sourceDoc.subject(data.subject);
                     self.sourceDoc.body(data.body);
+                    self.sourceDoc.NEQuery(data.NEQuery);
+                    self.sourceDoc.allTermsQuery(data.allTermsQuery);
                     self.workingCorporaSize(data.amountInCorpora);
+                    console.log(self.sourceDoc.allTermsQuery());
                 });
         }
     });
