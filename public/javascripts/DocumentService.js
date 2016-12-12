@@ -40,7 +40,9 @@ DocumentService = function(){
 
     self.GetQueryResults = function(query){
         return $.ajax({
-
+            type: "GET",
+            url: "http://localhost:8080/ipdk/api/results?query=" + query,
+            dataType: "json"
         });
     }
 };

@@ -54,21 +54,38 @@
         </div> <!-- /.panel-heading doc-view-heading -->
         <div class="panel-body doc-view">
             <!-- Tab panes -->
+            <input data-bind="textInput: chosenQuery"/>
+            <a class="btn btn-primary" data-bind="click: query">Run Custom Query</a>
+            <br/>
             <a class="btn btn-default" data-bind="click: neQuery">Run Named Entities Query</a>
+            <br/>
             <a class="btn btn-default" data-bind="click: allTermsQuery">Run All Terms Query</a>
-            <p data-bind="text: queryResults"></p>
+            <br/>
+            <ul data-bind="foreach: queryResults">
+                <li>
+                    <p data-bind="text: docno"></p>
+                    <p data-bind="text: fileId"></p>
+                    <p data-bind="text: first"></p>
+                    <p data-bind="text: second"></p>
+                </li>
+            </ul>
+            <p data-bind="text: sourceDoc.allTermsQuery"></p>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <p data-bind="text: sourceDoc.NEQuery"></p>
 
-            <!--<div class="tab-content">-->
-                <!--<div role="tabpanel" class="tab-pane active" id="search">-->
-                    <!--<% include search.ejs %>-->
-                <!--</div>-->
-                <!--<div role="tabpanel" class="tab-pane" id="compare">
-                    <!--<% include comparisonDoc.ejs %>-->
-                <!--</div>-->
-                <!--<div role="tabpanel" class="tab-pane" id="results">-->
-                    <!--<% include results.ejs %>-->
-                <!--</div>-->
-            <!--</div> &lt;!&ndash; /.tab-content &ndash;&gt;-->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="search">
+
+                    <%# include search.ejs %>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="compare">
+                    <%# include results.ejs %>
+                </div>
+            </div> <!-- /.tab-content -->
         </div> <!-- /.panel-body -->
     </div> <!--/.panel panel-default -->
 </div> <!-- /.col-xs-6 -->

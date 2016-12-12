@@ -3,6 +3,8 @@ IndexViewModel = function(settings){
     var self = this;
 
     // Observables
+
+    // Source Document
     self.sourceDoc = {
         created : ko.observable("Loading..."),
         released : ko.observable("Loading..."),
@@ -40,6 +42,10 @@ IndexViewModel = function(settings){
     self.workingCorpora = ko.observable();
     self.workingCorporaSize = ko.observable(0);
 
+    // Querying
+    self.chosenQuery = ko.observable("");
+    self.queryResults = ko.observableArray([]);
+
     // Navigation Observables and Logic
     self.showCorporaChoice = ko.observable(true);
     self.showIndexingMenu = ko.observable(false);
@@ -75,6 +81,23 @@ IndexViewModel = function(settings){
             .done( function(data) {
                 self.indexedNew(true);
             }); // TODO
+    };
+
+    self.query = function() {
+        settings.DocumentService.GetQueryResults(self.chosenQuery())
+            .done(function (data) {
+                self.queryResults(data.results);
+            });
+    };
+
+    self.neQuery = function() {
+        self.chosenQuery(self.sourceDoc.NEQuery());
+        self.query();
+    };
+
+    self.allTermsQuery = function() {
+        self.chosenQuery(self.sourceDoc.allTermsQuery());
+        self.query();
     };
 
     self.appearIndexingMenu = function() {
