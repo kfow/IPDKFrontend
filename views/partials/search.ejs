@@ -1,46 +1,25 @@
-<h3 class="panel-title">Search Options</h3>
-<input style="margin-top: 20px" type="search" class="form-control" placeholder="Search for Related Documents">
-<a class="btn btn-default" href="/results">Search</a>
-<a class="btn btn-default">View Auto Query Results</a>
-<p>
-    Click on any of the below Named Entities or Key phrases to add them to the search box.
-    You can also type or paste text here to generate a custom search.
-    Click search to return a new list of related documents.
-</p>
-<h4>Named Entities</h4>
-<ul class="list-group">
-    <a class="list-group-item">
-        Barack Obama
-    </a>
-    <a class="list-group-item">
-        David Cameron
-    </a>
-    <a class="list-group-item">
-        Dan Aykroyd
-    </a>
-    <a class="list-group-item">
-        John Belushi
-    </a>
-    <a class="list-group-item">
-        Carrie Fisher
+<input data-bind="textInput: chosenQuery"/>
+<a class="btn btn-primary" data-bind="click: query">Run Custom Query</a>
+<br/>
+<a class="btn btn-default" data-bind="click: neQuery">Run Named Entities Query</a>
+<br/>
+<a class="btn btn-default" data-bind="click: allTermsQuery">Run All Terms Query</a>
+<br/>
+<ul class="list-group" data-bind="foreach: queryResults">
+    <a class="list-group-item" data-bind="click: $parent.loadTargetDocument">
+        <!--<a class="btn btn-primary" href="/search" style="float: right;">View</a>-->
+        <p data-bind="text: docno"></p>
+        <p data-bind="text: fileId"></p>
+        <p data-bind="text: head"></p>
+        <p data-bind="text: bodyAbstract"></p>
     </a>
 </ul>
 
-<h4>Extracted Keyphrases</h4>
-<ul class="list-group">
-    <a class="list-group-item">
-        Lorem Ipsum
-    </a>
-    <a class="list-group-item">
-        Valor Sum
-    </a>
-    <a class="list-group-item">
-        Information Retrieval
-    </a>
-    <a class="list-group-item">
-        Mexican Food
-    </a>
-    <a class="list-group-item">
-        Atlantic Records
-    </a>
-</ul>
+<!-- TODO: replace with tf Named Entities -->
+<!--<p data-bind="text: sourceDoc.allTermsQuery"></p>-->
+<!--<br/>-->
+<!--<br/>-->
+<!--<br/>-->
+<!--<br/>-->
+<!--<br/>-->
+<!--<p data-bind="text: sourceDoc.NEQuery"></p>-->

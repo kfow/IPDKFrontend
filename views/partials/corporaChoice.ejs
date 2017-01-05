@@ -8,7 +8,7 @@
     <div class="panel-body doc-view">
         <input data-bind="textInput: workingCorpora" />
             <ul data-bind="foreach: availableIndexes">
-                <li data-bind="text: $data"></li>
+                <p><a class="btn btn-default" data-bind="text: $data, click: $parent.workingCorpora"></a></p>
             </ul>
     </div>
     <div class="panel-footer">

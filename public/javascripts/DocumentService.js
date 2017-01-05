@@ -44,5 +44,13 @@ DocumentService = function(){
             url: "http://localhost:8080/ipdk/api/results?query=" + query,
             dataType: "json"
         });
+    };
+
+    self.GetTargetDoc = function(docno) {
+        return $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ipdk/api/targetdoc/" + docno,
+            dataType: "json"
+        });
     }
 };

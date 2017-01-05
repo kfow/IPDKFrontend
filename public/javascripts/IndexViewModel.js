@@ -24,7 +24,6 @@ IndexViewModel = function(settings){
     self.availableIndexes = ko.observableArray([]);
     ko.computed(function() {
         //Retrieving available indexes
-        console.log("Retrieving available indexes");
         if (self.indexedNew()) self.indexedNew(false);
         settings.DocumentService.GetIndexes()
             .done ( function(data) {
@@ -57,7 +56,6 @@ IndexViewModel = function(settings){
 
     ko.computed(function() {
         if (self.workingCorpora()) {
-            console.log("Retrieving Source Document");
             settings.DocumentService.GetSourceDoc(self.currentSourceDocument(), self.workingCorpora())
                 .done(function (data) {
                     self.sourceDoc.created(data.created);
@@ -71,10 +69,14 @@ IndexViewModel = function(settings){
                     self.sourceDoc.NEQuery(data.NEQuery);
                     self.sourceDoc.allTermsQuery(data.allTermsQuery);
                     self.workingCorporaSize(data.amountInCorpora);
-                    console.log(self.sourceDoc.allTermsQuery());
                 });
         }
     });
+
+    // Three Target Document ViewModels
+    self.targetDocVM1 = ko.observable();
+    self.targetDocVM2 = ko.observable();
+    self.targetDocVM3 = ko.observable();
 
     self.beginIndexing = function() {
         settings.DocumentService.IndexSourceFiles(self.indexPath())
@@ -130,4 +132,60 @@ IndexViewModel = function(settings){
         }
     };
 
+
+    // Tab control
+    self.targetDoc1Free = ko.observable(true);
+    self.targetDoc2Free = ko.observable(true);
+    self.targetDoc3Free = ko.observable(true);
+
+    self.showTargetDoc1 = ko.observable(false);
+    self.showTargetDoc2 = ko.observable(false);
+    self.showTargetDoc3 = ko.observable(false);
+
+    self.showRetryDialogue = ko.observable(false);
+
+    self.closeTargetDoc1 = function(){
+        self.targetDoc1Free(true);
+        self.showTargetDoc1(false);
+    };
+
+    self.closeTargetDoc2 = function(){
+        self.targetDoc2Free(true);
+        self.showTargetDoc2(false);
+    };
+
+    self.closeTargetDoc3 = function(){
+        self.targetDoc3Free(true);
+        self.showTargetDoc3(false);
+    };
+
+    self.loadTargetDocument = function(doc){
+        if (self.targetDoc1Free()){
+            console.log("opening tab 1");
+            self.targetDocVM1(new TargetDocumentViewModel({
+                DocNo: doc.docno,
+                DocumentService: settings.DocumentService
+            }));
+            self.targetDoc1Free(false);
+            self.showTargetDoc1(true);
+        } else if (self.targetDoc2Free()){
+            console.log("opening tab 2");
+            self.targetDocVM2(new TargetDocumentViewModel({
+                DocNo: doc.docno,
+                DocumentService: settings.DocumentService
+            }));
+            self.targetDoc2Free(false);
+            self.showTargetDoc2(true);
+        } else if (self.targetDoc3Free()){
+            console.log("opening tab 3");
+            self.targetDocVM3(new TargetDocumentViewModel({
+                DocNo: doc.docno,
+                DocumentService: settings.DocumentService
+            }));
+            self.targetDoc3Free(false);
+            self.showTargetDoc3(true);
+        } else {
+            self.showRetryDialogue(true);
+        }
+    };
 };
