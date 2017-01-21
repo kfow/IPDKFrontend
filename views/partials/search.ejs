@@ -5,12 +5,15 @@
 <br/>
 <a class="btn btn-default" data-bind="click: allTermsQuery">Run All Terms Query</a>
 <br/>
+
+<a class="btn btn-default" data-bind="">Add This Search as a Topic</a>
+
 <ul class="list-group" data-bind="foreach: queryResults">
-    <a class="list-group-item" data-bind="click: $parent.loadTargetDocument">
+    <a class="list-group-item" data-bind="click: $parent.addTargetDoc">
         <!--<a class="btn btn-primary" href="/search" style="float: right;">View</a>-->
         <p data-bind="text: docno"></p>
-        <p data-bind="text: fileId"></p>
-        <p data-bind="text: head"></p>
+        <p data-bind="text: date"></p>
+        <p data-bind="text: title"></p>
         <p data-bind="text: bodyAbstract"></p>
     </a>
 </ul>

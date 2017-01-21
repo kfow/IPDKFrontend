@@ -1,7 +1,7 @@
 IndexViewModel = function(settings){
 
     var self = this;
-
+    self.settings = settings;
     // Observables
 
     // Source Document
@@ -15,7 +15,9 @@ IndexViewModel = function(settings){
         subject : ko.observable("Loading..."),
         body : ko.observable("Loading..."),
         NEQuery : ko.observable("Loading..."),
-        allTermsQuery: ko.observable("Loading...")
+        allTermsQuery: ko.observable("Loading..."),
+        // Should this be 0
+        topicNum: ko.observable(0)
     };
 
     self.indexedNew = ko.observable(false);
@@ -73,11 +75,6 @@ IndexViewModel = function(settings){
         }
     });
 
-    // Three Target Document ViewModels
-    self.targetDocVM1 = ko.observable();
-    self.targetDocVM2 = ko.observable();
-    self.targetDocVM3 = ko.observable();
-
     self.beginIndexing = function() {
         settings.DocumentService.IndexSourceFiles(self.indexPath())
             .done( function(data) {
@@ -89,6 +86,16 @@ IndexViewModel = function(settings){
         settings.DocumentService.GetQueryResults(self.chosenQuery())
             .done(function (data) {
                 self.queryResults(data.results);
+            });
+        var topicInformation = {
+          title : self.chosenQuery(),
+          source : self.sourceDoc.origin()
+        };
+        settings.DocumentService.WriteTopic(topicInformation)
+            .done(function (data){
+                self.sourceDoc.topicNum(data.num);
+                // TODO: Save topic no that was written
+                console.log("Wrote topic");
             });
     };
 
@@ -132,60 +139,14 @@ IndexViewModel = function(settings){
         }
     };
 
+    self.targetDocs = ko.observableArray([]);
 
-    // Tab control
-    self.targetDoc1Free = ko.observable(true);
-    self.targetDoc2Free = ko.observable(true);
-    self.targetDoc3Free = ko.observable(true);
-
-    self.showTargetDoc1 = ko.observable(false);
-    self.showTargetDoc2 = ko.observable(false);
-    self.showTargetDoc3 = ko.observable(false);
-
-    self.showRetryDialogue = ko.observable(false);
-
-    self.closeTargetDoc1 = function(){
-        self.targetDoc1Free(true);
-        self.showTargetDoc1(false);
+    self.addTargetDoc = function(docNo){
+        console.log("adding target doc");
+        self.targetDocs.push(docNo);
     };
 
-    self.closeTargetDoc2 = function(){
-        self.targetDoc2Free(true);
-        self.showTargetDoc2(false);
-    };
-
-    self.closeTargetDoc3 = function(){
-        self.targetDoc3Free(true);
-        self.showTargetDoc3(false);
-    };
-
-    self.loadTargetDocument = function(doc){
-        if (self.targetDoc1Free()){
-            console.log("opening tab 1");
-            self.targetDocVM1(new TargetDocumentViewModel({
-                DocNo: doc.docno,
-                DocumentService: settings.DocumentService
-            }));
-            self.targetDoc1Free(false);
-            self.showTargetDoc1(true);
-        } else if (self.targetDoc2Free()){
-            console.log("opening tab 2");
-            self.targetDocVM2(new TargetDocumentViewModel({
-                DocNo: doc.docno,
-                DocumentService: settings.DocumentService
-            }));
-            self.targetDoc2Free(false);
-            self.showTargetDoc2(true);
-        } else if (self.targetDoc3Free()){
-            console.log("opening tab 3");
-            self.targetDocVM3(new TargetDocumentViewModel({
-                DocNo: doc.docno,
-                DocumentService: settings.DocumentService
-            }));
-            self.targetDoc3Free(false);
-            self.showTargetDoc3(true);
-        } else {
-            self.showRetryDialogue(true);
-        }
+    self.removeTargetDoc = function(docNo){
+        self.targetDocs.remove(docNo);
     };
 };

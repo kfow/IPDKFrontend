@@ -32,22 +32,15 @@
         <div class="panel-heading">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-
                 <li role="presentation" class="active">
                     <a href="#search" aria-controls="search" role="tab" data-toggle="tab">Search</a>
                 </li>
-                <li role="presentation" data-bind="visible: showTargetDoc1">
-                    <a href="#compare1" aria-controls="compare1" role="tab" data-toggle="tab">Target Doc 1</a>
-                    <span class="close-tab" data-bind="click: closeTargetDoc1">x</span>
+                <!-- ko foreach: targetDocs -->
+                <li role="presentation">
+                    <a data-bind="attr: {href: function(){return '#' + $.data}, 'aria-controls': $data}, text: $data" role="tab" data-toggle="tab"></a>
+                    <span class="close-tab" data-bind="click: removeTargetDoc">x</span>
                 </li>
-                <li role="presentation" data-bind="visible: showTargetDoc2">
-                    <a href="#compare2" aria-controls="compare2" role="tab" data-toggle="tab">Target Doc 2</a>
-                    <span class="close-tab" data-bind="click: closeTargetDoc2">x</span>
-                </li>
-                <li role="presentation" data-bind="visible: showTargetDoc3">
-                    <a href="#compare3" aria-controls="compare3" role="tab" data-toggle="tab">Target Doc 3</a>
-                    <span class="close-tab" data-bind="click: closeTargetDoc3">x</span>
-                </li>
+                <!-- /ko -->
             </ul>
         </div> <!-- /.panel-heading doc-view-heading -->
         <div class="panel-body doc-view">
@@ -56,16 +49,11 @@
                 <div role="tabpanel" class="tab-pane active" id="search">
                     <% include search.ejs %>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="compare1" data-bind="with: targetDocVM1, visible: showTargetDoc1">
-                    <% include targetDoc.ejs %>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="compare2" data-bind="with: targetDocVM2, visible: showTargetDoc2">
-                    <% include targetDoc.ejs %>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="compare3" data-bind="with: targetDocVM3, visible: showTargetDoc3">
-                    <% include targetDoc.ejs %>
-                </div>
-
+                <!-- ko foreach: targetDocs -->
+                <targetdocument params="docno: $data,
+                                        documentService: $parent.settings.DocumentService">
+                </targetdocument>
+                <!-- /ko -->
             </div> <!-- /.tab-content -->
         </div> <!-- /.panel-body -->
     </div> <!--/.panel panel-default -->

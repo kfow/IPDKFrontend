@@ -52,5 +52,23 @@ DocumentService = function(){
             url: "http://localhost:8080/ipdk/api/targetdoc/" + docno,
             dataType: "json"
         });
+    };
+
+    self.WriteTopic = function(topicInformation){
+        return $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/ipdk/api/writetopic/",
+            dataType: "json",
+            data: JSON.stringify(topicInformation)
+        });
+    };
+
+    self.WriteQrel = function(qrelInformation){
+        return $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/ipdk/api/writeqrel/",
+            dataType: "json",
+            data: JSON.stringify(qrelInformation)
+        });
     }
 };
