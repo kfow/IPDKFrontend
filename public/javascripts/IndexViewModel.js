@@ -1,6 +1,7 @@
 IndexViewModel = function(settings){
 
     var self = this;
+    console.log(settings);
     self.settings = settings;
     // Observables
 
@@ -93,9 +94,8 @@ IndexViewModel = function(settings){
         };
         settings.DocumentService.WriteTopic(topicInformation)
             .done(function (data){
+                console.log(data.num);
                 self.sourceDoc.topicNum(data.num);
-                // TODO: Save topic no that was written
-                console.log("Wrote topic");
             });
     };
 
@@ -141,12 +141,14 @@ IndexViewModel = function(settings){
 
     self.targetDocs = ko.observableArray([]);
 
-    self.addTargetDoc = function(docNo){
-        console.log("adding target doc");
-        self.targetDocs.push(docNo);
+    self.addTargetDoc = function(object){
+        self.targetDocs.push(object.docNo);
     };
 
+    // TODO: Check this logic
     self.removeTargetDoc = function(docNo){
+        console.log("Removing Target Doc");
         self.targetDocs.remove(docNo);
+        console.log(self.targetDocs());
     };
 };

@@ -37,8 +37,8 @@
                 </li>
                 <!-- ko foreach: targetDocs -->
                 <li role="presentation">
-                    <a data-bind="attr: {href: function(){return '#' + $.data}, 'aria-controls': $data}, text: $data" role="tab" data-toggle="tab"></a>
-                    <span class="close-tab" data-bind="click: removeTargetDoc">x</span>
+                    <a data-bind="attr: { href: '#' + $data, 'aria-controls': $data}, text: $data" role="tab" data-toggle="tab"></a>
+                    <span class="close-tab" data-bind="click: $parent.removeTargetDoc">x</span>
                 </li>
                 <!-- /ko -->
             </ul>
@@ -50,9 +50,12 @@
                     <% include search.ejs %>
                 </div>
                 <!-- ko foreach: targetDocs -->
-                <targetdocument params="docno: $data,
-                                        documentService: $parent.settings.DocumentService">
-                </targetdocument>
+                <div role="tabpanel" class="tab-pane" data-bind="attr: {id: $data}">
+                    <targetdocument params="docNo: $data,
+                                        DocumentService: $parent.settings.DocumentService,
+                                        TopicNum: $parent.sourceDoc.topicNum">
+                    </targetdocument>
+                </div>
                 <!-- /ko -->
             </div> <!-- /.tab-content -->
         </div> <!-- /.panel-body -->

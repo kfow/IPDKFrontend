@@ -53,3 +53,7 @@ a {
 .close-tab:hover{
     color: red;
 }
+
+.small{
+    font-size: small;
+}
