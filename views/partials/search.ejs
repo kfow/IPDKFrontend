@@ -1,28 +1,28 @@
-<input data-bind="textInput: chosenQuery"/>
-<a class="btn btn-primary" data-bind="click: query">Run Custom Query</a>
-<br/>
-<a class="btn btn-default" data-bind="click: neQuery">Run Named Entities Query</a>
-<br/>
-<a class="btn btn-default" data-bind="click: allTermsQuery">Run All Terms Query</a>
-<br/>
-
-<a class="btn btn-default" data-bind="">Add This Search as a Topic</a>
-
+<p>
+    <a class="btn btn-primary" role="button" data-toggle="collapse"
+       href="#advancedSearchOptions" aria-expanded="false" aria-controls="advancedSearchOptions">
+        Toggle Advanced Search Options
+    </a>
+</p>
+<div class="collapse" id="advancedSearchOptions">
+    <div class="well">
+        <input data-bind="textInput: chosenQuery"/>
+        <a class="btn btn-primary" data-bind="click: query">Run Custom Query</a>
+        <br/>
+        <a class="btn btn-default" data-bind="click: neQuery">Run Named Entities Query</a>
+        <br/>
+        <a class="btn btn-default" data-bind="click: allTermsQuery">Run All Terms Query</a>
+        <br/>
+        <a class="btn btn-default" data-bind="click: subjectQuery">Run Subject Query</a>
+        </br>
+        <a class="btn btn-default" data-bind="click: addToTopics">Add To Topics</a>
+    </div>
+</div>
 <ul class="list-group" data-bind="foreach: queryResults">
     <a class="list-group-item" data-bind="click: $parent.addTargetDoc">
-        <!--<a class="btn btn-primary" href="/search" style="float: right;">View</a>-->
         <p data-bind="text: docNo"></p>
         <p data-bind="text: date"></p>
         <p data-bind="text: title"></p>
         <p data-bind="text: bodyAbstract"></p>
     </a>
 </ul>
-
-<!-- TODO: replace with tf Named Entities -->
-<!--<p data-bind="text: sourceDoc.allTermsQuery"></p>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<p data-bind="text: sourceDoc.NEQuery"></p>-->

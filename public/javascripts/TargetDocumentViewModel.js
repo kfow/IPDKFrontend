@@ -1,21 +1,25 @@
 TargetDocumentViewModel = function(settings){
-    console.log("Loading new target doc vm");
-    console.log(settings);
+    var openTime = Date.now();
     var self = this;
 
-    self.docNo = ko.observable(settings.docNo);
-    self.title = ko.observable("");
-    self.date = ko.observable("");
-    self.keywords = ko.observable("");
-    self.body = ko.observable("");
+    self.document = {
+        docNo : ko.observable(settings.docNo),
+        title : ko.observable(""),
+        date : ko.observable(""),
+        keywords : ko.observable(""),
+        body : ko.observable("")
+    };
+
+    self.comment = ko.observable("");
+    self.evalMode = ko.observable(settings.EvalMode());
 
     ko.computed( function(){
         settings.DocumentService.GetTargetDoc(settings.docNo)
             .done( function(data){
-                self.title(data.title);
-                self.date(data.date);
-                self.keywords(data.keywords);
-                self.body(data.body);
+                self.document.title(data.title);
+                self.document.date(data.date);
+                self.document.keywords(data.keywords);
+                self.document.body(self.cleanBody(data.body));
             });
     });
 
@@ -32,9 +36,24 @@ TargetDocumentViewModel = function(settings){
     };
 
     self.sendQrel = function(){
-        settings.DocumentService.WriteQrel({ topic: settings.TopicNum(), docNo: self.docNo(), relevant: self.relevance()})
+        var qrelInfo = {
+            topic: settings.TopicNum(),
+            docNo: self.document.docNo(),
+            relevant: self.relevance(),
+            reviewTime: (Date.now() - openTime),
+            comment: self.comment()
+        };
+        settings.DocumentService.WriteQrel(qrelInfo)
             .done( function(data){
                 // Do Something
             });
     };
+
+    self.cleanBody = function(input){
+        // Clean out reuters tagging (angle and square brackets -- uses lazy matching .*?)
+        var output = input.replace(/(<(.*?)>)|(\[(.*?)\])/gi, "");
+        output = output.replace(/\s{5,}/gi, "<br /><br />");
+        output = output.replace(/\t/gi, "<br /><br />");
+        return output;
+    }
 };
