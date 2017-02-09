@@ -6,10 +6,13 @@
     </div> <!-- /.panel-heading doc-view-heading-->
 
     <div class="panel-body doc-view">
-        <input data-bind="textInput: workingCorpora" />
-            <ul data-bind="foreach: availableIndexes">
-                <p><a class="btn btn-default" data-bind="text: $data, click: $parent.workingCorpora"></a></p>
-            </ul>
+        <!--<input data-bind="textInput: workingCorpora" />-->
+        <!--Need some other way to indicate Working Corpora -->
+        <h4>Chosen Corpora:</h4>
+        <p data-bind="text: workingCorpora"></p>
+        <ul data-bind="foreach: availableIndexes">
+            <p><a class="btn btn-default" data-bind="text: $data, click: $parent.workingCorpora"></a></p>
+        </ul>
     </div>
     <div class="panel-footer">
         <a data-bind="click: appearMainApp" class="btn btn-primary float-left"> Begin Reviewing</a>

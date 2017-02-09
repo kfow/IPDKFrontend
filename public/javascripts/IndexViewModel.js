@@ -65,6 +65,8 @@ IndexViewModel = function(settings){
 
     ko.computed(function() {
         if (self.workingCorpora()) {
+            // Clear Query Results as soon as source doc changes.
+            self.queryResults([]);
             settings.DocumentService.GetSourceDoc(self.currentSourceDocument(), self.workingCorpora())
                 .done(function (data) {
                     self.sourceDoc.docNo(data.docNo),
@@ -108,11 +110,10 @@ IndexViewModel = function(settings){
 
     self.addToTopics = function(){
         var topicInformation = {
+            subjectQuery: self.sourceDoc.subject().toLowerCase(),
             allTermsQuery : self.sourceDoc.allTermsQuery(),
             neQuery: self.sourceDoc.NEQuery(),
-            subjectQuery: self.sourceDoc.subject().toLowerCase(),
-            //neTfIdfQuery: self.sourceDoc.neTfIdfQuery(),
-            //customQuery: self.sourceDoc.customQuery(),
+            neTfIdfQuery: "",
             source : self.sourceDoc.docNo()
         };
         settings.DocumentService.WriteTopic(topicInformation)
