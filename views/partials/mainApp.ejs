@@ -52,8 +52,9 @@
                 <div role="tabpanel" class="tab-pane" data-bind="attr: {id: $data}">
                     <targetdocument params="DocumentService: $parent.settings.DocumentService,
                                             docNo: $data,
-                                            TopicNum: $parent.sourceDoc.topicNum,
-                                            EvalMode: $parent.evalMode">
+                                            TopicNum: $parent.sourceDoc.docNo,
+                                            EvalMode: $parent.evalMode,
+                                            JudgedDocs: $parent.judgedTargetDocs">
                     </targetdocument>
                 </div>
                 <!-- /ko -->

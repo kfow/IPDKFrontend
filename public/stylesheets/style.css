@@ -57,3 +57,7 @@ a {
 .small{
     font-size: small;
 }
+
+.greyed{
+    background-color: dimgrey;
+}

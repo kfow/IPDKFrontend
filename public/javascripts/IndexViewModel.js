@@ -17,7 +17,7 @@ IndexViewModel = function(settings){
         body : ko.observable("Loading..."),
         NEQuery : ko.observable("Loading..."),
         allTermsQuery: ko.observable("Loading..."),
-        topicNum: ko.observable(0)
+        neTfQuery: ko.observable("Loading...")
     };
 
     self.indexedNew = ko.observable(false);
@@ -45,6 +45,7 @@ IndexViewModel = function(settings){
     self.showMainApp = ko.observable(false);
 
     self.targetDocs = ko.observableArray([]);
+    self.judgedTargetDocs = ko.observableArray([]);
 
     self.evalMode = ko.observable(false);
 
@@ -80,6 +81,7 @@ IndexViewModel = function(settings){
                     self.sourceDoc.body(data.body.replace(/¶(\d)\./gi, "<br /><br />"));
                     self.sourceDoc.NEQuery(data.NEQuery);
                     self.sourceDoc.allTermsQuery(data.allTermsQuery);
+                    self.sourceDoc.neTfQuery(data.neTfQuery);
                     self.workingCorporaSize(data.amountInCorpora);
                     self.evalMode(false);
 
@@ -113,14 +115,19 @@ IndexViewModel = function(settings){
             subjectQuery: self.sourceDoc.subject().toLowerCase(),
             allTermsQuery : self.sourceDoc.allTermsQuery(),
             neQuery: self.sourceDoc.NEQuery(),
-            neTfIdfQuery: "",
-            source : self.sourceDoc.docNo()
+            neTfQuery: self.sourceDoc.neTfQuery(),
+            source : self.sourceDoc.docNo(),
+            topicNum : self.sourceDoc.docNo()
         };
-        settings.DocumentService.WriteTopic(topicInformation)
-            .done(function(data){
-                self.sourceDoc.topicNum(data.num);
-                self.evalMode(true);
+        // TODO: Some way of identifying success here.
+        settings.DocumentService.WriteTopic(topicInformation);
+        settings.DocumentService.JudgedDocuments(topicInformation.topicNum)
+            .done(function (data) {
+                self.judgedTargetDocs(data.docNos);
             });
+
+
+        self.evalMode(true);
     };
 
     // ------------------ Utility Functions ------------------
@@ -137,6 +144,11 @@ IndexViewModel = function(settings){
 
     self.subjectQuery = function() {
         self.chosenQuery(self.sourceDoc.subject().toLowerCase());
+        self.query();
+    };
+
+    self.neTfQuery = function(){
+        self.chosenQuery(self.sourceDoc.neTfQuery());
         self.query();
     };
 
@@ -186,4 +198,8 @@ IndexViewModel = function(settings){
     self.openOtherTab = function(){
         self.searchTabVisible(false);
     };
+
+    self.inJudgedTargetDocuments = function(docNo){
+        return !(self.judgedTargetDocs.indexOf(docNo) === -1);
+    }
 };

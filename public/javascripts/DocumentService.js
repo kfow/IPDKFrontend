@@ -70,5 +70,14 @@ DocumentService = function(){
             dataType: "json",
             data: JSON.stringify(qrelInformation)
         });
-    }
+    };
+
+    self.JudgedDocuments = function(topicNum){
+        console.log("Getting Judged Documents");
+        return $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ipdk/api/qrel/" + topicNum,
+            dataType: "json"
+        });
+    };
 };

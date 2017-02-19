@@ -47,6 +47,7 @@ TargetDocumentViewModel = function(settings){
             .done( function(data){
                 // Do Something
             });
+        settings.JudgedDocs.push(qrelInfo.docNo);
     };
 
     self.cleanBody = function(input){
