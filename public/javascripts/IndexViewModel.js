@@ -17,7 +17,7 @@ IndexViewModel = function(settings){
         body : ko.observable("Loading..."),
         NEQuery : ko.observable("Loading..."),
         allTermsQuery: ko.observable("Loading..."),
-        neTfQuery: ko.observable("Loading...")
+        tfIdfNeQuery: ko.observable("Loading...")
     };
 
     self.indexedNew = ko.observable(false);
@@ -81,7 +81,7 @@ IndexViewModel = function(settings){
                     self.sourceDoc.body(data.body.replace(/¶(\d)\./gi, "<br /><br />"));
                     self.sourceDoc.NEQuery(data.NEQuery);
                     self.sourceDoc.allTermsQuery(data.allTermsQuery);
-                    self.sourceDoc.neTfQuery(data.neTfQuery);
+                    self.sourceDoc.tfIdfNeQuery(data.tfIdfNeQuery);
                     self.workingCorporaSize(data.amountInCorpora);
                     self.evalMode(false);
 
@@ -115,7 +115,7 @@ IndexViewModel = function(settings){
             subjectQuery: self.sourceDoc.subject().toLowerCase(),
             allTermsQuery : self.sourceDoc.allTermsQuery(),
             neQuery: self.sourceDoc.NEQuery(),
-            neTfQuery: self.sourceDoc.neTfQuery(),
+            tfIdfNeQuery: self.sourceDoc.tfIdfNeQuery(),
             source : self.sourceDoc.docNo(),
             topicNum : self.sourceDoc.docNo()
         };
@@ -133,6 +133,7 @@ IndexViewModel = function(settings){
     // ------------------ Utility Functions ------------------
 
     self.neQuery = function() {
+        self.queryResults([]);
         self.chosenQuery(self.sourceDoc.NEQuery());
         self.query();
     };
@@ -147,8 +148,8 @@ IndexViewModel = function(settings){
         self.query();
     };
 
-    self.neTfQuery = function(){
-        self.chosenQuery(self.sourceDoc.neTfQuery());
+    self.tfIdfNeQuery = function(){
+        self.chosenQuery(self.sourceDoc.tfIdfNeQuery());
         self.query();
     };
 
@@ -171,12 +172,16 @@ IndexViewModel = function(settings){
     };
 
     self.nextSourceDocument = function(){
+        self.evalMode(false);
+        self.judgedTargetDocs([]);
         if (self.currentSourceDocument() < self.workingCorporaSize()){
             self.currentSourceDocument(self.currentSourceDocument() + 1);
         }
     };
 
     self.previousSourceDocument = function(){
+        self.evalMode(false);
+        self.judgedTargetDocs([]);
         if (self.currentSourceDocument() > 0) {
             self.currentSourceDocument(self.currentSourceDocument() - 1);
         }
@@ -200,6 +205,6 @@ IndexViewModel = function(settings){
     };
 
     self.inJudgedTargetDocuments = function(docNo){
-        return !(self.judgedTargetDocs.indexOf(docNo) === -1);
+        return (!(self.judgedTargetDocs.indexOf(docNo) === -1) && self.evalMode());
     }
 };

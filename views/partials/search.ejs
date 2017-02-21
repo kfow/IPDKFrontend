@@ -15,23 +15,17 @@
         <br/>
         <a class="btn btn-default" data-bind="click: subjectQuery">Run Subject Query</a>
         </br>
-        <a class="btn btn-default" data-bind="click: neTfQuery">Run NE TF Query</a>
+        <a class="btn btn-default" data-bind="click: tfIdfNeQuery">Run NE TF-IDF Query</a>
         </br>
         <a class="btn btn-default" data-bind="click: addToTopics">Add To Topics</a>
     </div>
 </div>
 <ul class="list-group" data-bind="foreach: queryResults">
     <a class="list-group-item greyed" style="overflow-x: hidden" data-bind="click: $parent.addTargetDoc, css: {greyed: $parent.inJudgedTargetDocuments(docNo)}">
-        <!-- TODO: FIND BEST FORMAT FOR THIS -->
-        <p>DOCNO</p>
         <p data-bind="text: docNo"></p>
-        <p>DATE</p>
         <p data-bind="text: date"></p>
-        <p>TITLE</p>
         <p data-bind="text: title"></p>
-        <p>KEYWORDS</p>
         <p data-bind="text: keywords"></p>
-        <p>BODY ABSTRACT</p>
         <p data-bind="text: bodyAbstract"></p>
     </a>
 </ul>
