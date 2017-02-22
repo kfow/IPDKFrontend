@@ -22,6 +22,8 @@
             <a class="btn btn-primary float-left" data-bind="click: previousSourceDocument"> Previous </a>
             <a class="btn btn-primary float-right" data-bind="click: nextSourceDocument"> Next </a>
             <p style="display: flex; justify-content: center; align-items: center" data-bind="text: documentProgressCounter"></p>
+            <br/>
+            <input data-bind="textInput: currentSourceDocument"/>
             <div class="clearfix"></div>
         </div> <!-- /.panel-footer -->
     </div> <!-- /.panel panel-default -->
@@ -44,7 +46,6 @@
         </div> <!-- /.panel-heading doc-view-heading -->
         <div class="panel-body doc-view">
             <div class="tab-content">
-
                 <div role="tabpanel" class="tab-pane" id="search" data-bind="css: {'active': searchTabVisible}">
                     <% include search.ejs %>
                 </div>

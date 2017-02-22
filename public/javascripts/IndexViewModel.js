@@ -144,7 +144,7 @@ IndexViewModel = function(settings){
     };
 
     self.subjectQuery = function() {
-        self.chosenQuery(self.sourceDoc.subject().toLowerCase());
+        self.chosenQuery(self.sourceDoc.subject().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\"]/g,""));
         self.query();
     };
 
