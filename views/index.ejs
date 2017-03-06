@@ -7,15 +7,18 @@
 <div id="index-continer">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12" data-bind="visible: showCorporaChoice">
-                <% include partials/corporaChoice%>
+            <div class="landing" data-bind="visible: !showMainApp()">
+                <% include partials/landing %>
             </div>
-            <div class="col-xs-12" data-bind="visible: showIndexingMenu">
-                <% include partials/indexingMenu %>
-            </div>
+            <!--<div class="col-xs-12" data-bind="visible: showCorporaChoice">-->
+                <!--< include partials/corporaChoice %>-->
+            <!--</div>-->
+            <!--<div class="col-xs-12" data-bind="visible: showIndexingMenu">-->
+                <!--< include partials/indexingMenu %>-->
+            <!--</div>-->
             <div class="main-app" data-bind="visible: showMainApp">
                 <% include partials/mainApp %>
-            </div> <!-- /.main-app
+            </div> <!-- /.main-app -->
         </div> <!-- /.row -->
     </div> <!-- /.container-fluid -->
 </div> <!-- /.index-container -->

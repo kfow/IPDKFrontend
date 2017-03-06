@@ -1,0 +1,32 @@
+<div class="col-xs-6">
+    <div class="panel panel-default" id="source-doc-panel">
+        <div class="panel-heading">
+            <h1 class="panel-title">Choose an Indexed Corpora to Work On</h1>
+            <div class="clearfix"></div>
+        </div> <!-- /.panel-heading doc-view-heading-->
+
+        <div class="panel-body doc-view">
+            <h4>Chosen Corpora: <span data-bind="text: workingCorpora"></span></h4>
+            <ul data-bind="foreach: availableIndexes">
+                <p><a class="btn btn-default" data-bind="text: $data, click: $parent.changeWorkingCorpora"></a></p>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <a data-bind="click: appearMainApp" class="btn btn-primary float-left"> Begin Reviewing</a>
+            <div class="clearfix"></div>
+        </div> <!-- /.panel-footer -->
+    </div> <!-- /.panel panel-default -->
+</div>
+<div class="col-xs-6">
+    <div class="panel panel-default" id="source-doc-panel">
+        <div class="panel-heading">
+            <h1 class="panel-title">Index a New Corpora</h1>
+            <div class="clearfix"></div>
+        </div> <!-- /.panel-heading doc-view-heading-->
+        <div class="panel-body doc-view">
+            <p>Type relative path of the directory you wish to index:</p>
+            <p></p><input data-bind="textInput: indexPath" /></p>
+            <a data-bind="click: beginIndexing" class="btn btn-primary"> Begin Indexing </a>
+        </div>
+    </div> <!-- /.panel panel-default -->
+</div>

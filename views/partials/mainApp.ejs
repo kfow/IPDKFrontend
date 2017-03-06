@@ -1,7 +1,7 @@
 <div class="col-xs-6">
     <div class="panel panel-default" id="source-doc-panel">
         <div class="panel-heading">
-            <h1 class="panel-title">Document for Reviewal</h1>
+            <h1 class="panel-title">Document for Review</h1>
             <a data-bind="click: appearCorporaChoice" class="btn btn-default float-right">Change Working Corpora</a>
             <div class="clearfix"></div>
         </div> <!-- /.panel-heading doc-view-heading-->
@@ -23,7 +23,6 @@
             <a class="btn btn-primary float-right" data-bind="click: nextSourceDocument"> Next </a>
             <p style="display: flex; justify-content: center; align-items: center" data-bind="text: documentProgressCounter"></p>
             <br/>
-            <input data-bind="textInput: currentSourceDocument"/>
             <div class="clearfix"></div>
         </div> <!-- /.panel-footer -->
     </div> <!-- /.panel panel-default -->
@@ -44,7 +43,7 @@
                 <!-- /ko -->
             </ul>
         </div> <!-- /.panel-heading doc-view-heading -->
-        <div class="panel-body doc-view">
+        <div class="panel-body doc-view" style="min-height: 80vh; max-height: 80vh;">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane" id="search" data-bind="css: {'active': searchTabVisible}">
                     <% include search.ejs %>
@@ -58,7 +57,7 @@
                                             JudgedDocs: $parent.judgedTargetDocs">
                     </targetdocument>
                 </div>
-                <!-- /ko -->
+                <!-- /ko-->
             </div> <!-- /.tab-content -->
         </div> <!-- /.panel-body -->
     </div> <!--/.panel panel-default -->

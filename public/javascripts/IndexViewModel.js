@@ -17,17 +17,16 @@ IndexViewModel = function(settings){
         body : ko.observable("Loading..."),
         NEQuery : ko.observable("Loading..."),
         allTermsQuery: ko.observable("Loading..."),
-        tfIdfNeQuery: ko.observable("Loading...")
+        tfIdfNeQuery: ko.observable("Loading..."),
+        subjectQuery: ko.observable("Loading...")
     };
+    self.currentSourceDocument = ko.observable(0);
 
     self.indexedNew = ko.observable(false);
 
-    // Available Indexes (Initial Setup Also)
     self.availableIndexes = ko.observableArray([]);
 
     self.showAdmin = ko.observable(false);
-
-    self.currentSourceDocument = ko.observable(0);
 
     // Path to find source docs to index
     self.indexPath = ko.observable();
@@ -40,8 +39,8 @@ IndexViewModel = function(settings){
     self.queryResults = ko.observableArray([]);
 
     // Navigation Observables and Logic
-    self.showCorporaChoice = ko.observable(true);
-    self.showIndexingMenu = ko.observable(false);
+    // self.showCorporaChoice = ko.observable(true);
+    // self.showIndexingMenu = ko.observable(false);
     self.showMainApp = ko.observable(false);
 
     self.targetDocs = ko.observableArray([]);
@@ -68,27 +67,32 @@ IndexViewModel = function(settings){
         if (self.workingCorpora()) {
             // Clear Query Results as soon as source doc changes.
             self.queryResults([]);
-            settings.DocumentService.GetSourceDoc(self.currentSourceDocument(), self.workingCorpora())
+            var docToGet = self.currentSourceDocument();
+            settings.DocumentService.GetSourceDoc(docToGet, self.workingCorpora())
                 .done(function (data) {
-                    self.sourceDoc.docNo(data.docNo),
-                    self.sourceDoc.created(data.created);
-                    self.sourceDoc.released(data.released);
-                    self.sourceDoc.classification(data.classification);
-                    self.sourceDoc.origin(data.origin);
-                    self.sourceDoc.from(data.from);
-                    self.sourceDoc.to(data.to);
-                    self.sourceDoc.subject(data.subject);
-                    self.sourceDoc.body(data.body.replace(/¶(\d)\./gi, "<br /><br />"));
-                    self.sourceDoc.NEQuery(data.NEQuery);
-                    self.sourceDoc.allTermsQuery(data.allTermsQuery);
-                    self.sourceDoc.tfIdfNeQuery(data.tfIdfNeQuery);
-                    self.workingCorporaSize(data.amountInCorpora);
-                    self.evalMode(false);
+                    // Only update values and fire query if sourceDoc hasn't changed in time to get information.
+                    if (docToGet === self.currentSourceDocument()) {
+                        self.sourceDoc.docNo(data.docNo);
+                        self.sourceDoc.created(data.created);
+                        self.sourceDoc.released(data.released);
+                        self.sourceDoc.classification(data.classification);
+                        self.sourceDoc.origin(data.origin);
+                        self.sourceDoc.from(data.from);
+                        self.sourceDoc.to(data.to);
+                        self.sourceDoc.subject(data.subject);
+                        // Replace Paragraph marks with newline.
+                        self.sourceDoc.body(data.body.replace(/¶(\d)\./gi, "<br /><br />"));
+                        self.sourceDoc.NEQuery(data.NEQuery);
+                        self.sourceDoc.allTermsQuery(data.allTermsQuery);
+                        self.sourceDoc.tfIdfNeQuery(data.tfIdfNeQuery);
+                        self.sourceDoc.subjectQuery(data.subjectQuery);
+                        self.workingCorporaSize(data.amountInCorpora);
+                        self.evalMode(false);
 
-                    // Automatic Query on Doc Load - Sending NEQuery atm, could change after evaluation phase.
-                    self.neQuery();
+                        // Automatic Query on Doc Load - Sending NEQuery atm, could change after evaluation phase.
+                        self.neQuery();
+                    }
                 });
-
         }
     });
 
@@ -96,15 +100,14 @@ IndexViewModel = function(settings){
 
     self.beginIndexing = function() {
         settings.DocumentService.IndexSourceFiles(self.indexPath())
-            .done( function(data) {
+            .done( function() {
                 self.indexedNew(true);
-                console.log("Indexed Source Documents: " + data);
-                // TODO: Do something with data
             });
     };
 
-    self.query = function() {
-        settings.DocumentService.GetQueryResults(self.chosenQuery())
+    self.query = function(isSubjectQuery) {
+        self.queryResults([]);
+        settings.DocumentService.GetQueryResults({query: self.chosenQuery()}, isSubjectQuery)
             .done(function (data) {
                 self.queryResults(data.results);
             });
@@ -112,7 +115,7 @@ IndexViewModel = function(settings){
 
     self.addToTopics = function(){
         var topicInformation = {
-            subjectQuery: self.sourceDoc.subject().toLowerCase(),
+            subjectQuery: self.sourceDoc.subjectQuery(),
             allTermsQuery : self.sourceDoc.allTermsQuery(),
             neQuery: self.sourceDoc.NEQuery(),
             tfIdfNeQuery: self.sourceDoc.tfIdfNeQuery(),
@@ -121,12 +124,11 @@ IndexViewModel = function(settings){
         };
         // TODO: Some way of identifying success here.
         settings.DocumentService.WriteTopic(topicInformation);
+
         settings.DocumentService.JudgedDocuments(topicInformation.topicNum)
             .done(function (data) {
                 self.judgedTargetDocs(data.docNos);
             });
-
-
         self.evalMode(true);
     };
 
@@ -135,22 +137,22 @@ IndexViewModel = function(settings){
     self.neQuery = function() {
         self.queryResults([]);
         self.chosenQuery(self.sourceDoc.NEQuery());
-        self.query();
+        self.query(false);
     };
 
     self.allTermsQuery = function() {
         self.chosenQuery(self.sourceDoc.allTermsQuery());
-        self.query();
+        self.query(false);
     };
 
     self.subjectQuery = function() {
-        self.chosenQuery(self.sourceDoc.subject().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()\"]/g,""));
-        self.query();
+        self.chosenQuery(self.sourceDoc.subjectQuery());
+        self.query(true);
     };
 
     self.tfIdfNeQuery = function(){
         self.chosenQuery(self.sourceDoc.tfIdfNeQuery());
-        self.query();
+        self.query(false);
     };
 
     self.appearIndexingMenu = function() {
@@ -160,19 +162,21 @@ IndexViewModel = function(settings){
     };
 
     self.appearCorporaChoice = function() {
-        self.showIndexingMenu(false);
-        self.showCorporaChoice(true);
+        self.indexedNew(true);
+        // self.showIndexingMenu(false);
+        // self.showCorporaChoice(true);
         self.showMainApp(false);
     };
 
     self.appearMainApp = function() {
-        self.showIndexingMenu(false);
-        self.showCorporaChoice(false);
+        // self.showIndexingMenu(false);
+        // self.showCorporaChoice(false);
         self.showMainApp(true);
     };
 
     self.nextSourceDocument = function(){
         self.evalMode(false);
+        self.targetDocs([]);
         self.judgedTargetDocs([]);
         if (self.currentSourceDocument() < self.workingCorporaSize()){
             self.currentSourceDocument(self.currentSourceDocument() + 1);
@@ -181,6 +185,7 @@ IndexViewModel = function(settings){
 
     self.previousSourceDocument = function(){
         self.evalMode(false);
+        self.targetDocs([]);
         self.judgedTargetDocs([]);
         if (self.currentSourceDocument() > 0) {
             self.currentSourceDocument(self.currentSourceDocument() - 1);
@@ -197,6 +202,7 @@ IndexViewModel = function(settings){
     };
 
     self.showSearchTab = function(){
+        $('.active').removeClass('active');
         self.searchTabVisible(true);
     };
 
@@ -206,5 +212,10 @@ IndexViewModel = function(settings){
 
     self.inJudgedTargetDocuments = function(docNo){
         return (!(self.judgedTargetDocs.indexOf(docNo) === -1) && self.evalMode());
+    };
+
+    self.changeWorkingCorpora = function(corpora){
+        self.workingCorpora(corpora);
+        self.currentSourceDocument(1);
     }
 };

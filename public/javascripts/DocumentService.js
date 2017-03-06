@@ -7,41 +7,10 @@
 DocumentService = function(){
     var self = this;
 
-    self.GetSourceDoc = function(currentDoc, workingCorpora){
-        var url;
-        if (currentDoc != null){
-            url = "http://localhost:8080/ipdk/api/sourcedoc?current=" + currentDoc
-                + "&workingCorpora=" + workingCorpora;
-        } else {
-            url = "http://localhost:8080/ipdk/api/sourcedoc?workingCorpora=" + workingCorpora;
-        }
+    self.GetSourceDoc = function(docId, workingCorpora){
         return $.ajax({
             type: "GET",
-            url: url,
-            dataType: "json"
-        });
-    };
-
-    self.IndexSourceFiles = function(path){
-        return $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/ipdk/api/indexsourcefiles?path=" + path,
-            dataType: "json"
-        });
-    };
-
-    self.GetIndexes = function(){
-        return $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/ipdk/api/indexedcorpora",
-            dataType: "json"
-        });
-    };
-
-    self.GetQueryResults = function(query){
-        return $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/ipdk/api/results?query=" + query,
+            url: "http://localhost:8080/ipdk/api/document/" + workingCorpora + "/" + docId,
             dataType: "json"
         });
     };
@@ -49,7 +18,32 @@ DocumentService = function(){
     self.GetTargetDoc = function(docno) {
         return $.ajax({
             type: "GET",
-            url: "http://localhost:8080/ipdk/api/targetdoc/" + docno,
+            url: "http://localhost:8080/ipdk/api/document/" + docno,
+            dataType: "json"
+        });
+    };
+
+    self.IndexSourceFiles = function(path){
+        return $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/ipdk/api/index",
+            data: JSON.stringify({path: path})
+        });
+    };
+
+    self.GetQueryResults = function(query){
+        return $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/ipdk/api/query",
+            dataType: "json",
+            data: JSON.stringify(query)
+        });
+    };
+
+    self.GetIndexes = function(){
+        return $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ipdk/api/index",
             dataType: "json"
         });
     };
@@ -57,7 +51,7 @@ DocumentService = function(){
     self.WriteTopic = function(topicInformation){
         return $.ajax({
             type: "POST",
-            url: "http://localhost:8080/ipdk/api/writetopic/",
+            url: "http://localhost:8080/ipdk/api/topic/",
             dataType: "json",
             data: JSON.stringify(topicInformation)
         });
@@ -66,7 +60,7 @@ DocumentService = function(){
     self.WriteQrel = function(qrelInformation){
         return $.ajax({
             type: "POST",
-            url: "http://localhost:8080/ipdk/api/writeqrel/",
+            url: "http://localhost:8080/ipdk/api/qrel/",
             dataType: "json",
             data: JSON.stringify(qrelInformation)
         });

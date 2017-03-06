@@ -24,8 +24,8 @@
     <a class="list-group-item greyed" style="overflow-x: hidden" data-bind="click: $parent.addTargetDoc, css: {greyed: $parent.inJudgedTargetDocuments(docNo)}">
         <p data-bind="text: docNo"></p>
         <p data-bind="text: date"></p>
-        <p data-bind="text: title"></p>
+        <p data-bind="html: title"></p>
         <p data-bind="text: keywords"></p>
-        <p data-bind="text: bodyAbstract"></p>
+        <p data-bind="html: bodyAbstract"></p>
     </a>
 </ul>
