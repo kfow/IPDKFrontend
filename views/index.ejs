@@ -10,23 +10,17 @@
             <div class="landing" data-bind="visible: !showMainApp()">
                 <% include partials/landing %>
             </div>
-            <!--<div class="col-xs-12" data-bind="visible: showCorporaChoice">-->
-                <!--< include partials/corporaChoice %>-->
-            <!--</div>-->
-            <!--<div class="col-xs-12" data-bind="visible: showIndexingMenu">-->
-                <!--< include partials/indexingMenu %>-->
-            <!--</div>-->
             <div class="main-app" data-bind="visible: showMainApp">
                 <% include partials/mainApp %>
             </div> <!-- /.main-app -->
         </div> <!-- /.row -->
     </div> <!-- /.container-fluid -->
 </div> <!-- /.index-container -->
-
 <script src="/javascripts/IndexViewModel.js"></script>
 <script src="/javascripts/DocumentService.js"></script>
 <script src="/javascripts/TargetDocumentViewModel.js"></script>
 <script src="/javascripts/components.js"></script>
+<script src="/javascripts/extenders.js"></script>
 <script>
     // Initialize Knockout ViewModel
     var documentService = new DocumentService();

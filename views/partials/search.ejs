@@ -1,9 +1,3 @@
-<p>
-    <a class="btn btn-primary" role="button" data-toggle="collapse"
-       href="#advancedSearchOptions" aria-expanded="false" aria-controls="advancedSearchOptions">
-        Toggle Advanced Search Options
-    </a>
-</p>
 <div class="collapse" id="advancedSearchOptions">
     <div class="well">
         <input data-bind="textInput: chosenQuery"/>
@@ -24,8 +18,8 @@
     <a class="list-group-item greyed" style="overflow-x: hidden" data-bind="click: $parent.addTargetDoc, css: {greyed: $parent.inJudgedTargetDocuments(docNo)}">
         <p data-bind="text: docNo"></p>
         <p data-bind="text: date"></p>
-        <p data-bind="html: title"></p>
+        <p class="decorate" data-bind="html: title"></p>
         <p data-bind="text: keywords"></p>
-        <p data-bind="html: bodyAbstract"></p>
+        <p class="decorate" data-bind="html: bodyAbstract"></p>
     </a>
 </ul>

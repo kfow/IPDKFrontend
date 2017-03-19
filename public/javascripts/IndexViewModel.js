@@ -21,7 +21,7 @@ IndexViewModel = function(settings){
         subjectQuery: ko.observable("Loading...")
     };
     self.currentSourceDocument = ko.observable(0);
-
+    self.inputSourceDocument = ko.observable("");
     self.indexedNew = ko.observable(false);
 
     self.availableIndexes = ko.observableArray([]);
@@ -39,8 +39,6 @@ IndexViewModel = function(settings){
     self.queryResults = ko.observableArray([]);
 
     // Navigation Observables and Logic
-    // self.showCorporaChoice = ko.observable(true);
-    // self.showIndexingMenu = ko.observable(false);
     self.showMainApp = ko.observable(false);
 
     self.targetDocs = ko.observableArray([]);
@@ -51,7 +49,7 @@ IndexViewModel = function(settings){
     self.searchTabVisible = ko.observable(true);
 
     self.documentProgressCounter = ko.computed(function(){
-        return parseInt(self.currentSourceDocument())+1 + "/" + (parseInt(self.workingCorporaSize()) +1);
+        return parseInt(self.currentSourceDocument()) + "/" + (parseInt(self.workingCorporaSize()) +1);
     });
 
     ko.computed(function() {
@@ -64,7 +62,7 @@ IndexViewModel = function(settings){
     });
 
     ko.computed(function() {
-        if (self.workingCorpora()) {
+        if (self.workingCorpora() &&  self.currentSourceDocument() > 0) {
             // Clear Query Results as soon as source doc changes.
             self.queryResults([]);
             var docToGet = self.currentSourceDocument();
@@ -88,7 +86,6 @@ IndexViewModel = function(settings){
                         self.sourceDoc.subjectQuery(data.subjectQuery);
                         self.workingCorporaSize(data.amountInCorpora);
                         self.evalMode(false);
-
                         // Automatic Query on Doc Load - Sending NEQuery atm, could change after evaluation phase.
                         self.neQuery();
                     }
@@ -110,6 +107,7 @@ IndexViewModel = function(settings){
         settings.DocumentService.GetQueryResults({query: self.chosenQuery()}, isSubjectQuery)
             .done(function (data) {
                 self.queryResults(data.results);
+                self.correctHeight();
             });
     };
 
@@ -155,22 +153,12 @@ IndexViewModel = function(settings){
         self.query(false);
     };
 
-    self.appearIndexingMenu = function() {
-        self.showIndexingMenu(true);
-        self.showCorporaChoice(false);
-        self.showMainApp(false);
-    };
-
     self.appearCorporaChoice = function() {
         self.indexedNew(true);
-        // self.showIndexingMenu(false);
-        // self.showCorporaChoice(true);
         self.showMainApp(false);
     };
 
     self.appearMainApp = function() {
-        // self.showIndexingMenu(false);
-        // self.showCorporaChoice(false);
         self.showMainApp(true);
     };
 
@@ -217,5 +205,21 @@ IndexViewModel = function(settings){
     self.changeWorkingCorpora = function(corpora){
         self.workingCorpora(corpora);
         self.currentSourceDocument(1);
+    };
+
+    self.correctHeight = function(){
+        var lh = $('#left-panel-head')[0].offsetHeight;
+        var lb = $('#left-panel-body')[0].offsetHeight;
+        var rh = $('#right-panel-head')[0].offsetHeight;
+        $('#right-panel-body').css('min-height', ((lh+lb)-rh).toString()+'px');
+        $('#right-panel-body').css('max-height', ((lh+lb)-rh).toString()+'px');
+    };
+
+    self.goToSourceDocument = function(){
+        var newDocNo = parseInt(self.inputSourceDocument());
+        if (!isNaN(newDocNo) && newDocNo > 0 && newDocNo <= self.workingCorporaSize()){
+            self.currentSourceDocument(newDocNo);
+        }
+        self.inputSourceDocument("");
     }
 };
