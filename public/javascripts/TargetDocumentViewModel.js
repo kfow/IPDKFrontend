@@ -1,4 +1,6 @@
+// ViewModel for TargetDocument component of system
 TargetDocumentViewModel = function(settings){
+    // Begin recording time at instantiation
     var openTime = Date.now();
     var self = this;
 

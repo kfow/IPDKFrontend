@@ -162,6 +162,10 @@ IndexViewModel = function(settings){
         self.showMainApp(true);
     };
 
+    // set eval mode to false (which unhighlights judged results)
+    // empty the list of target docs
+    // set judged target docs to empty
+    // increment source doc id if within bounds
     self.nextSourceDocument = function(){
         self.evalMode(false);
         self.targetDocs([]);
@@ -171,6 +175,10 @@ IndexViewModel = function(settings){
         }
     };
 
+    // set eval mode to false (which unhighlights judged results)
+    // empty the list of target docs
+    // set judged target docs to empty
+    // decrement source doc id if within bounds
     self.previousSourceDocument = function(){
         self.evalMode(false);
         self.targetDocs([]);

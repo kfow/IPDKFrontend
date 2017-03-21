@@ -1,6 +1,6 @@
 /**
  * Created by kelvin on 19/10/2016.
- * Responsible for ajax requests to RESTful API to retrieve documents to view.
+ * Responsible for ajax requests to RESTful API to communicate with backend.
  */
 
 
